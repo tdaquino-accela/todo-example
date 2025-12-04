@@ -1,0 +1,14 @@
+::ng-deep formly-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+::ng-deep .formly-field {
+  margin-bottom: 1.5rem;
+}
+
+::ng-deep formly-field {
+  display: block;
+  margin-bottom: 1.5rem;
+}

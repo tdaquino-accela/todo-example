@@ -1,0 +1,15 @@
+<div class="w-full bg-gray-50 dark:bg-gray-900 dark:text-white min-h-screen py-10">
+  <div class="bg-gray-800 dark:bg-gray-50 max-w-2xl mx-auto rounded-lg shadow-lg">
+    <form class="flex flex-col justify-center" [formGroup]="form$" (ngSubmit)="onSubmit(model$)">
+      @if (fetchFormFields$ | async; as formData) {
+        @for (section of formData.fields; track section.mainSection) {
+          <div class="w-full flex flex-col">
+            <div class="w-full h-4 text-lg py-8 px-2 font-semibold bg-indigo-900 flex items-center">{{ section.mainSection }}</div>
+            <formly-form [form]="form$" [fields]="section.fields" [model]="model$"></formly-form>
+          </div>
+        }
+      }
+      <button type="submit" class="bg-indigo-800 border border-indigo-700 rounded px-4 py-2 m-4 text-white">Submit</button>
+    </form>
+  </div>
+</div>
