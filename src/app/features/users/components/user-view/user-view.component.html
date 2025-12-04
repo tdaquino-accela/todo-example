@@ -1,0 +1,48 @@
+@let user = user$ | async;
+
+<div class="w-full bg-gray-50 dark:bg-gray-900 dark:text-white min-h-screen py-10">
+  <div class="max-w-2xl mx-auto px-4">
+    <button
+      (click)="goBack()"
+      class="mb-6 flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      Back to Users
+    </button>
+
+    @if (user) {
+      <mat-card class="shadow-lg bg-gray-600 dark:bg-gray-800">
+        <mat-card-content class="p-8">
+          <div class="flex items-center gap-6 mb-8">
+            <div class="w-24 h-24 rounded-full bg-blue-500 dark:bg-blue-600 flex items-center justify-center text-white font-bold text-4xl">
+              {{ user.firstName.charAt(0).toUpperCase() }}
+            </div>
+            <div>
+              <h1 class="text-4xl font-bold mb-2">{{ user.firstName }} {{ user.lastName }}</h1>
+              <p class="text-gray-400">User ID: {{ user.id }}</p>
+            </div>
+          </div>
+
+          <div class="space-y-4 bg-gray-700 dark:bg-gray-700 p-6 rounded-lg">
+            <div>
+              <label class="text-gray-400 text-sm font-semibold">First Name</label>
+              <p class="text-lg">{{ user.firstName }}</p>
+            </div>
+            <div>
+              <label class="text-gray-400 text-sm font-semibold">Last Name</label>
+              <p class="text-lg">{{ user.lastName }}</p>
+            </div>
+            <div>
+              <label class="text-gray-400 text-sm font-semibold">Email</label>
+              <p class="text-lg break-all">{{ user.email }}</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    } @else {
+      <div class="text-center py-12">
+        <p class="text-xl text-gray-400">User not found</p>
+      </div>
+    }
+  </div>
+</div>

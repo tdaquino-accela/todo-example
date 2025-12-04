@@ -1,0 +1,15 @@
+@let vm = usersViewModel$ | async;
+<div class="w-full bg-gray-50 dark:bg-gray-900 dark:text-white min-h-screen py-10">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-2">Users</h1>
+      <p class="text-gray-600 dark:text-gray-400">Manage and view all users</p>
+    </div>
+
+    @if (vm?.loading) {
+      <anms-users-list-skeleton [loading]="vm?.loading"> </anms-users-list-skeleton>
+    } @else {
+      <anms-users-list [users]="vm?.users" (onUserClick)="onUserClick($event)"> </anms-users-list>
+    }
+  </div>
+</div>

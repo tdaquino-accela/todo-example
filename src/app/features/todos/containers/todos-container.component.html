@@ -1,0 +1,38 @@
+<div
+  class="w-full flex items-center justify-center dark:bg-gray-900 dark:text-white bg-gray-100 min-h-screen py-10"
+>
+  <div class="max-w-5xl">
+    <anms-add-todo
+      [todoDescriptionFormControl]="todoDescriptionFormControl"
+      [todoNameFormControl]="todoNameFormControl"
+      [removeDoneDisabled]="(removeDoneDisabled$ | async) ?? false"
+      (onRemoveDoneTodos)="onRemoveDoneTodos()"
+      (onAddTodo)="onAddTodo()"
+    ></anms-add-todo>
+
+    <div class="flex flex-col">
+      <anms-todo-list-header 
+        [filter]="filter$ | async"
+        (onFilterTodos)="onFilterTodos($event)"
+      ></anms-todo-list-header>
+      <div
+        class="py-6 h-[400px] grid grid-cols-2 gap-4 border-2 border-gray-400 border-dashed rounded-2xl"
+      >
+        @if (todos$ | async; as todos) { @if(todos.length) {
+        <div class="w-full p-6 h-full overflow-auto">
+          <anms-todos-list [todos]="todos" (onSelectTodo)="onSelectTodo($event)" (onToggleTodo)="onToggleTodo($event)"></anms-todos-list>
+        </div>
+        } @else {
+        <div class="w-full flex flex-col gap-4 items-center justify-center place-self-center">
+          <img src="/empty_data.svg" alt="No todos" class="mx-auto" />
+          <div class="text-center text-gray-200">No todos founds yet!</div>
+        </div>
+        } }
+
+        <div class="w-[400px] h-full p-6 place-self-center  overflow-auto">
+          <anms-todo-detail [todo]="selectedTodo$ | async"></anms-todo-detail>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

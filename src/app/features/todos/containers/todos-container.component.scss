@@ -1,0 +1,70 @@
+.entry {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.todos-filter-info {
+  float: right;
+  font-weight: normal;
+}
+
+.dotos-title {
+  display: flex;
+  > span {
+    flex: 1;
+  }
+}
+
+.todos-filter {
+  float: right;
+  position: relative;
+  left: 10px;
+  top: -5px;
+  margin-left: -10px;
+}
+
+.todo {
+  display: flex;
+  margin-bottom: 10px;
+
+  .todo-done {
+    margin: 0 20px 0 0;
+  }
+
+  .todo-label {
+    position: relative;
+    top: 2px;
+    cursor: pointer;
+
+    &.todo-label-done {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+  }
+}
+
+/* WIDTH */
+::-webkit-scrollbar {
+  width: 10px;
+  margin-top: 10px;
+}
+
+/* tRACK */
+::-webkit-scrollbar-track {
+  box-shadow: INSET 0 0 0px GREY;
+  border-radius: 20px;
+  margin-top: 16px;
+}
+
+/* hANDLE */
+::-webkit-scrollbar-thumb {
+  background: darkblue;
+  border-radius: 20px;
+  margin-top: 10px;
+}
+
+/* hANDLE ON HOVER */
+::-webkit-scrollbar-thumb:hover {
+  background: darkblue;
+  margin-top: 10px;
+}

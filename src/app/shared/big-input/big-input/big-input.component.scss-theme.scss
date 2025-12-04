@@ -1,0 +1,30 @@
+@use '@angular/material' as mat;
+
+@mixin anms-big-input-component-theme($theme) {
+  $primary-color: map-get($theme, primary);
+  $accent-color: map-get($theme, accent);
+
+  anms-big-input {
+    .big-input {
+      input {
+        color: rgba(black, 0.87);
+        background-color: rgba(white, 0.97);
+        border-bottom: 1px solid rgba(black, 0.12);
+        
+        &:focus {
+          border-bottom-color: mat.get-theme-color($theme, primary);
+          outline: none;
+        }
+      }
+
+      &.has-focus {
+        $accent-palette: map-get($theme, accent);
+        $accent-color: mat.get-theme-color($theme, accent);
+        
+        box-shadow: 0 0 15px 2px rgba($accent-color, 0.4),
+                    0 0 15px 2px rgba($accent-color, 0.4),
+                    0 0 15px 2px rgba($accent-color, 0.4);
+      }
+    }
+  }
+}

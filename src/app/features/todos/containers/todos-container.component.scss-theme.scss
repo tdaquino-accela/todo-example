@@ -1,0 +1,33 @@
+@use '@angular/material' as mat;
+
+@mixin anms-todos-container-component-theme($theme) {
+  $accent-color: mat.get-theme-color($theme, accent);
+
+  .todos-filter-menu-overlay {
+    .active {
+      color: rgba(white, 1);
+      background-color: $accent-color;
+
+      .fa-icon {
+        color: rgba(white, 1);
+      }
+
+      &:hover {
+        color: rgba(white, 1);
+        background-color: darken($accent-color, 10%);
+      }
+    }
+  }
+
+  .todos-notification-overlay {
+    .mat-simple-snackbar {
+      align-items: center;
+
+      button {
+        border-radius: 2px;
+        background-color: $accent-color;
+        color: rgba(white, 1);
+      }
+    }
+  }
+}

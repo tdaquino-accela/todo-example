@@ -1,0 +1,10 @@
+@let todosList = todos();
+<div class="flex flex-col gap-4">
+@for (todo of todosList; track todo.id; let lastItem = $last) {
+ <anms-todo-list-item
+   [todo]="todo"
+   (onSelectTodo)="onSelectTodo.emit($event)"
+   (onToggleTodo)="onToggleTodo.emit($event)"
+ ></anms-todo-list-item>
+}
+</div>

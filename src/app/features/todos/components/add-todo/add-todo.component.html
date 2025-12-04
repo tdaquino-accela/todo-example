@@ -1,0 +1,45 @@
+<div
+  class="w-full h-45 rounded-2xl mb-5 border border-gray-900 bg-gray-800 p-4 flex items-center justify-between gap-4"
+>
+  <!-- Input -->
+  <div class="flex flex-col gap-2 flex-grow">
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Todo name</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Enter todo name"
+        required
+        [formControl]="todoNameFormControl"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Todo description</mat-label>
+      <textarea
+        type="text"
+        matInput
+        placeholder="Enter todo description"
+        required
+        [formControl]="todoDescriptionFormControl"
+      ></textarea>
+    </mat-form-field>
+  </div>
+  <!-- Actions -->
+  <button
+    mat-mini-fab
+    color="primary"
+    (click)="onAddTodo.emit(todoDescriptionFormControl.value)"
+    [disabled]="!todoDescriptionFormControl.value || !todoNameFormControl.value"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+  <button
+    mat-mini-fab
+    class="bg-red-900"
+    (click)="$event.stopPropagation()"
+    (click)="onRemoveDoneTodos.emit()"
+    [disabled]="removeDoneDisabled"
+  >
+    <mat-icon class="material-icons-outlined !text-red-100">delete</mat-icon>
+  </button>
+</div>
