@@ -7,19 +7,28 @@ import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
 import { CustomFieldsService } from '../custom-fields.service';
 import { CustomFieldsFormModel } from '../custom-fields.model';
+import { UpdateFieldsReadonlyPipe } from '../pipes/update-fields-readonly.pipe';
 
 @Component({
   selector: 'app-custom-fields',
   templateUrl: './custom-fields-container.component.html',
   styleUrl: './custom-fields-container.component.scss',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormlyForm],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormlyForm,
+    UpdateFieldsReadonlyPipe
+  ],
 })
 export class CustomFieldsContainerComponent implements OnInit{
   private store = inject(Store);
   private customFieldsService = inject(CustomFieldsService);
   fetchFormFields$!: Observable<CustomFieldsFormModel>;
   customFieldsViewModel$ = this.store.select(customFieldsViewModel);
+  form$ = new FormGroup({});
+  model$ = {};
+  isEditMode = false;
 
   ngOnInit(): void {
     this.fetchFormFields$ = this.customFieldsService.loadForm().pipe(
@@ -29,10 +38,12 @@ export class CustomFieldsContainerComponent implements OnInit{
     );
   }
 
-  form$ = new FormGroup({});
-  model$ = { acceptTerms: false };
+  toggleEditMode(): void {
+    this.isEditMode = !this.isEditMode;
+  }
 
   onSubmit(model: any) {
-    console.log(model);
+    console.log('Form submitted with nested model:', model);
+    this.toggleEditMode();
   }
 }

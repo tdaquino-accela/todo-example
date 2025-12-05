@@ -2,22 +2,28 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import {
   CustomFieldsBackendModel,
   CustomFieldsFormModel,
-  FieldsBySection,
 } from './custom-fields.model';
 
 export function mapBackendDataToForm(data: CustomFieldsBackendModel): CustomFieldsFormModel {
+  console.log('Mapping backend data to form model:', data);
   if (!data || !data.result || data.result.length === 0) {
     return {
       fields: [],
     };
   }
 
-  const fieldsBySection: FieldsBySection[] = data.result.map((section) => ({
-    mainSection: section.text,
-    fields: section.fields
+  const fieldsBySection: FormlyFieldConfig[] = data.result.map((section) => ({
+    key: section.id.replace(/\s+/g, '_').toLowerCase(),
+    wrappers: ['section'],
+    props: {
+      label: section.text,
+    },
+    fieldGroup: section.fields
       .sort((a, b) => a.displayOrder - b.displayOrder)
       .map((field) => mapFieldToFormField(field)),
   }));
+
+  console.log('Mapped fields by section:', fieldsBySection);
 
   return {
     fields: fieldsBySection,
@@ -30,8 +36,8 @@ function mapFieldToFormField(field: any): FormlyFieldConfig {
     key: field.id.replace(/\s+/g, '_').toLowerCase(),
     type: mapFieldType(field.fieldType),
     props: {
-      required: field.isRequired === 'true' || field.isRequired === true,
-      readonly: field.isReadonly === 'true' || field.isReadonly === true,
+      required: field.isRequired === 'Y' || field.isRequired === true,
+      readonly: field.isReadonly === 'Y' || field.isReadonly === true,
       label: field.text,
       options:
         field.fieldType === 'DropdownList' && field.options
@@ -42,8 +48,14 @@ function mapFieldToFormField(field: any): FormlyFieldConfig {
               { label: 'No', value: false },
             ]
           : undefined,
-      maxLength: field.maxLength || 0,
+      maxLength: field.maxLength || undefined,
     },
+    fieldArray: field.fieldType === 'Repeat' ? {
+      type: 'input',
+      props: {
+        label: 'Item',
+      },
+    } : undefined,
   };
 }
 
@@ -59,6 +71,8 @@ function mapFieldType(fieldType: string): string {
     Date: 'datepicker',
     Time: 'input',
     TimeIsoFormat: 'input',
+    Repeat: 'repeat',
+    'File-Upload': 'file-upload',
   };
 
   return typeMap[fieldType] || 'input';

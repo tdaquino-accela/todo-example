@@ -1,4 +1,8 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -15,7 +19,10 @@ import { usersReducer } from './features/users/users.reducer';
 import { UsersEffects } from './features/users/users.effects';
 import { CustomFieldsEffects } from './features/custom-fields/custom-fields.effects';
 import { customFieldsReducer } from './features/custom-fields/custom-fields.reducer';
-
+import { provideIonicAngular } from '@ionic/angular/standalone';
+import { SectionWrapper } from './features/custom-fields/components/wrappers/section-wrapper.component';
+import { FormlyRepeatSectionComponent } from './features/custom-fields/components/customTypes/repeat-section.component';
+import { FormlyFileUploadComponent } from './features/custom-fields/components/customTypes/file-upload.component';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,17 +34,34 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideState({
       name: 'todos',
-      reducer: todosReducer
+      reducer: todosReducer,
     }),
     provideState({
       name: 'users',
-      reducer: usersReducer
+      reducer: usersReducer,
     }),
     provideState({
       name: 'customFields',
-      reducer: customFieldsReducer
+      reducer: customFieldsReducer,
     }),
     provideEffects([TodosEffects, UsersEffects, CustomFieldsEffects]),
-    provideFormlyCore([...withFormlyMaterial(), withFormlyFieldDatepicker()])
-  ]
+    provideFormlyCore([
+      ...withFormlyMaterial(), 
+      withFormlyFieldDatepicker(),
+      {
+        types: [{
+          name: 'repeat',
+          component: FormlyRepeatSectionComponent,
+        }, {
+          name: 'file-upload',
+          component: FormlyFileUploadComponent,
+          wrappers: ['form-field'],
+        }],
+        wrappers: [
+          { name: 'section', component: SectionWrapper },
+        ],
+      }
+    ]),
+    provideIonicAngular({}),
+  ],
 };

@@ -1,4 +1,3 @@
-import { props } from '@ngrx/store';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 export interface Countries {
   country: string;
@@ -34,10 +33,8 @@ export interface CustomField {
 }
 
 export interface CustomFieldsFormModel {
-    fields: FieldsBySection[];
-}
-
-export interface FieldsBySection {
-    mainSection: string;
     fields: FormlyFieldConfig[];
+    hooks?: {
+        onInit?: (formlyForm: any) => void;
+    };
 }
